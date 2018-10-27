@@ -1,0 +1,22 @@
+DROP TABLE IF EXISTS `customer`;
+CREATE TABLE `customer` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `birthdate` date DEFAULT NULL,
+  `balance` decimal(10,0) DEFAULT NULL,
+  `age` int(10) unsigned DEFAULT NULL,
+  `isActive` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `customer`
+--
+
+/*!40000 ALTER TABLE `customer` DISABLE KEYS */;
+INSERT INTO `customer` (`id`,`name`,`birthdate`,`balance`,`age`,`isActive`) VALUES 
+ (1,'masum',NULL,'343',10,NULL);
+/*!40000 ALTER TABLE `customer` ENABLE KEYS */;
+
+
+--

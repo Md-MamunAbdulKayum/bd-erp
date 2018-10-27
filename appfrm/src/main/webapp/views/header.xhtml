@@ -1,0 +1,67 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:p="http://primefaces.org/ui">
+    <!--header start-->
+    <header class="header fixed-top">
+        <h:form>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle hr-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <!--logo start-->
+                <!--logo start-->
+                <div class="brand ">
+                    <p:link class="logo" value="BD ERP" outcome="/views/customer/index" />
+                </div>
+                <!--logo end-->
+                <!--logo end-->
+                <div class="horizontal-menu navbar-collapse collapse ">
+
+                    <ul class="nav navbar-nav">
+
+                        <li> <p:link value="Dashboard" outcome="/views/customer/index"/></li>
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">Sales</a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <p:link value="Customers" outcome="/views/customer/index"/>
+                                </li>
+                                <li> 
+                                    <p:link value="SalesOrders" outcome="/views/customer/index"/>   
+                                </li>   
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">Purchases</a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <p:link value="Vendors" outcome="/views/customer/index"/>
+                                </li>
+                                <li> 
+                                    <p:link value="PurchaseOrders" outcome="/views/customer/index"/>   
+                                </li>   
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">Inventory</a>
+                            <ul class="dropdown-menu">
+                                <li> <p:link value="IncomingShipments" outcome="/views/customer/index"/></li>
+                                <li> <p:link value="DeliveryOrders" outcome="/views/customer/index"/></li>
+                                <li> <p:link value="Products" outcome="/views/customer/index"/></li> 
+                                <li> <p:link value="InventoryValuation" outcome="/views/customer/index" /></li> 
+                            </ul>
+                        </li>
+                    </ul>               
+                </div>
+              
+
+            </div>
+        </h:form> 
+    </header>
+
+</ui:composition>
+

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:pass="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:o="http://omnifaces.org/ui">
+
+    <p:growl id="msgs" widgetVar="growl"/>
+    <div class="row form-header-1">
+        <div class="col-md-12" >
+           <p:commandLink styleClass="form-nav"  process="@this" actionListener="#" update=":PartnerForm:content">
+                   </p:commandLink>
+            <span> / </span>
+            <h:outputText  value="#"/> 
+        </div>
+    </div> 
+    <div class="row form-header-2">
+         <div class="col-md-8">
+             <h:commandButton rendered="false" action="#" value="Create" styleClass="button red small">
+                <f:ajax execute="@this" render=":PartnerForm:content"/> 
+            </h:commandButton>
+            <h:commandButton rendered="false" action="#{customerApprovalCtr.prepareEditCustomer(customerApprovalCtr.customer.id)}" value="Edit" styleClass="button red small">
+                <f:ajax execute="@this" render=":PartnerForm:content"/> 
+            </h:commandButton>
+                                                                                                                         
+            <p:commandButton update=":PartnerForm:content" process="@this" actionListener="#{customerApprovalCtr.prepareEditCustomer(customerApprovalCtr.customer.id)}" value="Edit"  styleClass="btnn btnn-primary"/> 
+            <p:commandButton update=":PartnerForm:content" process="@this" actionListener="#{customerApprovalCtr.prepareCreateCustomer}" value="Create"  styleClass="btnn btnn-default"/>
+            <p:commandButton update=":PartnerForm:content" process="@this" actionListener="#{customerApprovalCtr.deleteCustomer(customerApprovalCtr.customer.id)}" value="Delete"  styleClass="btnn btnn-default"/> 
+        </div>
+        <div class="col-md-2point5 form-pagination" >
+            <div class="pagination-form-number">
+                <div class="form-number">
+                    <!-- #{userController.partnerIndex} / #{userController.partners.size()} -->
+                </div>
+                <ul class="pagination">
+                    <li>
+                        <p:commandLink actionListener="#"  process="@this" styleClass="fa fa-chevron-left" pass:aria-label="Previous" update=":PartnerForm:content" oncomplete="setNextFormURL('id',formId)"/>           
+                    </li>
+                    <li>
+                        <p:commandLink actionListener="#"  process="@this" styleClass="fa fa-chevron-right" pass:aria-label="Next" update=":PartnerForm:content" oncomplete="setNextFormURL('id',formId)"/>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-1point5 form-pagination" >
+            <ul class="pagination">
+                <li>
+                    <p:commandLink process="@this" actionListener="#{customerApprovalCtr.showCustomerGridView}"  styleClass="fa fa-th" update=":PartnerForm:content"/>           
+                </li>
+                <li class="active-nav-button">
+                    <p:commandLink process="@this" actionListener="#" styleClass="fa fa-square-o" update=":PartnerForm:content"/>           
+                </li>
+                <li>
+                    <p:commandLink process="@this" actionListener="#{customerApprovalCtr.showCustomerListView}" styleClass="fa fa-bars" update=":PartnerForm:content"/>
+                </li>
+            </ul>
+        </div>
+    </div>
+       <div class="row form-header-3" >
+        <div class="col-md-6 record-status-buttons">
+            <p:commandButton
+                value="Make" 
+                rendered="#{(customerApprovalCtr.customer.state == 'Draft')}" 
+                class="btnn btnn-primary"
+                actionListener="#{customerApprovalCtr.confirmCustomer(customerApprovalCtr.customer.id)}" 
+                update=":PartnerForm:content"/>       
+               
+                <p:commandButton
+                value="Check" 
+                rendered="#{(customerApprovalCtr.customer.state == 'Make')}" 
+                class="btnn btnn-primary"
+                actionListener="#{customerApprovalCtr.checkCustomer(customerApprovalCtr.customer.id)}" 
+                update=":PartnerForm:content"/>
+           
+        </div>
+        <div class="col-md-6 bread-crumb" >    
+            <div class="breadcrumbs flat">
+                <h:link  class="#{(customerApprovalCtr.customer.state == 'Draft') ? 'active' : ''}"  value="#{(customerApprovalCtr.customer.state == 'Draft')? 'Drafted' : 'Draft'}"/>
+                <h:link  rendered="#{(customerApprovalCtr.customer.state == 'Cancelled')}"  class="active"  value="Cancelled"/>
+                <h:link  class="#{(customerApprovalCtr.customer.state == 'Make')? 'active' : ''}"  value="#{(customerApprovalCtr.customer.state == 'Make' or customerApprovalCtr.customer.state == 'Check')? 'Maked' : 'Make'}"/>  
+                <h:link  class="#{(customerApprovalCtr.customer.state == 'Check') ? 'active' : ''}"  value="#{(customerApprovalCtr.customer.state == 'Check')? 'Checked' : 'Check'}"/>
+            </div>
+        </div>
+    </div>
+    <div class="row form-body">   
+      
+        <div class="row" style="margin-top: 12px; padding-left: 20px; padding-bottom: 10px;">
+    
+            <div class="col-md-10point5" style="margin-top: 32px; padding-right: 0px !important;"> 
+                <h:outputText id="name" value="#{customerApprovalCtr.customer.name}" class="form-name"/>
+            </div>            
+        </div>
+        <div class="row form-row" style="padding-left: 20px; margin-bottom:20px;">
+            <div class="col-md-2point5 form-label">
+                <p:outputLabel value="Birth Date"/>
+            </div> 
+            <div class="col-md-4">
+                <h:outputText id="street" value="#{customerApprovalCtr.customer.birthdate}"/>
+            </div>
+         
+        </div>
+    
+   
+     
+    
+    </div> 
+
+    <script type="text/javascript">
+        var formId = "#";
+        setFormURL('id',formId);
+         
+       
+       
+    </script>
+
+</ui:composition>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:pass="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <p:growl id="msgs" widgetVar="growl" />
+
+
+<div class="row form-header-1">
+          <div class="col-md-10" >
+
+        </div>
+        <div class="col-md-2 form-pagination" >
+            <ul class="pagination">
+                <li class="active-nav-button">
+                    <p:commandLink process="@this" actionListener="#{customerApprovalCtr.showCustomerGridView}"  styleClass="fa fa-th" style="font-size: 17px !important;" update=":PartnerForm:content"/>           
+                </li>
+                <li>
+                    <p:commandLink process="@this" actionListener="#{customerApprovalCtr.showCustomerForm}" styleClass="fa fa-square-o" style="font-size: 17px !important;" update=":PartnerForm:content"/>           
+                </li>
+                <li>
+                    <p:commandLink process="@this" actionListener="#{customerApprovalCtr.showCustomerListView}" styleClass="fa fa-bars" style="font-size: 17px !important;" update=":PartnerForm:content"/>
+                </li>
+            </ul>
+        </div>
+    </div> 
+    <div class="row form-header-2" style="padding-top: 5px;">
+        <div class="col-md-3">
+            <h:commandButton rendered="false" action="#{customerApprovalCtr.prepareCreateCustomer}" value="Create" styleClass="btnn btnn-primary">
+                <f:ajax execute="@this" render=":PartnerForm:content"/> 
+            </h:commandButton>  
+            <p:commandButton update=":PartnerForm:content" process="@this" actionListener="#{customerApprovalCtr.prepareCreateCustomer}" value="Create"  styleClass="btnn btnn-primary"/> 
+        </div>
+        <div class="col-md-9" style="padding-right: 5px !important;">
+            <div style="float:right;">                
+                <div class="searchLoader" style="padding-right: 5px;">
+                    <p:graphicImage  name="/img/search-loader.gif" style="margin-top: 3px; vertical-align: middle;"/>
+                </div>              
+                <h:inputText value="#{customerApprovalCtr.gridSearchKey}" id="gridFilter" style="display: inline-block; margin-right: 10px;" class="search" pass:placeholder="Search">
+                    <p:ajax  global="false" delay="500"  event="keyup" listener="#{customerApprovalCtr.searchByName}" process="@this" update=":PartnerForm:gridView" onstart="showSearchLoader();" oncomplete="updateGrid(); hideSearchLoader();"/>
+                </h:inputText>
+            </div>           
+        </div> 
+    </div>
+    <div class="row"> 
+        <p:dataGrid   id="gridView"      
+                      var="item" 
+                      binding="#{customersGrid}"
+                      value="#{customerApprovalCtr.customers}"
+                      rows="20" 
+                      columns="6" 
+                      emptyMessage="No data"
+                      rowIndexVar="rowIndex"
+                      paginatorAlwaysVisible="true"
+                      layout="grid" 
+                      paginator="true" 
+                      widgetVar="gridView"
+                      selectionMode="single"
+                      paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+            <p:ajax event="page" oncomplete="updateGrid();"/>
+            <p:commandLink class="data-grid-link" actionListener="#{customerApprovalCtr.prepareViewCustomer(rowIndex, item.id)}" process="@this" update=":PartnerForm:content">
+                              
+              <div class="data-grid">
+                     <span> #{item.id} </span>
+                    <div class="data-grid_details">
+                        <ul>
+                            <li class="data-grid_details-heading text_overflow">#{item.name}</li>
+                            <li>
+                                <span> #{item.birthdate} </span>
+                                <span> #{item.balance} </span>
+                            </li>
+                            <li class="text_overflow">#{item.age}</li>
+                        </ul>
+                     <!--   <div class="data-grid_details-links" jsf:rendered="#{customerApprovalCtrr.countSaleOrders(partner.id) > 0 and customerApprovalCtrr.countPurchaseOrders(partner.id) > 0}">
+                            <span class="badge">
+                                <i class="fa fa-fw fa-shopping-cart"/>
+                                <span>#{item.isActive}</span>
+                                <span>#{customerApprovalCtrr.countPurchaseOrders(partner.id)}</span>                                
+                            </span>
+                            <span class="badge">
+                                <i class="fa fa-fw fa-usd"/>                                   
+                                <span> #{customerApprovalCtrr.countSaleOrders(partner.id)} </span>                               
+                            </span>
+                        </div> -->
+                    </div>
+                </div>
+
+            </p:commandLink>
+
+        </p:dataGrid>       
+    </div> 
+<script>
+        var tableId = '#{customersGrid.clientId}';
+        hideGridPaginator(tableId);
+        $('.ui-datagrid-content').css('min-height', $(window).height());
+        function updateGrid() {
+            $('.ui-datagrid-content').css('min-height', $(window).height());
+            tableId = '#{customersGrid.clientId}';
+            hideGridPaginator(tableId);
+        }
+        setListURL();
+    </script>
+    <!-- page end--> 
+</ui:composition>

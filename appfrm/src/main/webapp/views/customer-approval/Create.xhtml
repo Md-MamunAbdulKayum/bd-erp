@@ -1,0 +1,83 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:pass="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:o="http://omnifaces.org/ui">
+
+    <p:growl id="msgs" widgetVar="growl"/>
+    <div class="row form-header-1">
+        <div class="col-md-12" >
+            <p:commandLink styleClass="form-nav"  process="@this" actionListener="#{customerApprovalCtr.saveData}" update=":PartnerForm:content">
+                 </p:commandLink>
+            <span>New</span>
+        </div>
+    </div> 
+    <div class="row form-header-2">
+        <div class="col-md-6">
+            <h:commandButton id="saveBtn" actionListener="#{customerApprovalCtr.saveData}"  value="Save" styleClass="btnn btnn-primary jsf-btn">
+                <f:ajax execute="@form"  render=":PartnerForm:content"/> 
+            </h:commandButton>
+           <p:commandButton  process="@this" styleClass="btnn btnn-default" value="Discard" actionListener="#{customerApprovalCtr.showCustomers}" update=":PartnerForm:content"/>
+
+ 
+        </div> 
+                   <div class="col-md-6 bread-crumb" >    
+            <div class="breadcrumbs flat">              
+                <a class="active">Draft</a>
+                <a>Make</a>
+                <a>Check</a> 
+            </div>
+        </div>
+
+    </div>                                     
+    <div class="row form-body"> 
+    
+        <div class="row" style="margin-top: 12px; padding-left: 20px; padding-bottom: 20px;">
+         
+            <div class="col-md-5" style="margin-top: 55px;"> 
+                <p:inputText id="name" value="#{customerApprovalCtr.customer.name}" class="required form-name-input fullWidth" placeholder="name" required="true" requiredMessage="Name is required" maxlength="50"/>
+            </div>      
+        </div>
+        
+        <div class="row" style="padding-left: 20px; margin-bottom:20px;">
+            <div class="col-md-2point5 form-label">
+                <p:outputLabel value="Birth Date"/>
+            </div> 
+            <div class="col-md-4">
+                <p:calendar id="birthdate" class="fullWidth" value="#{customerApprovalCtr.customer.birthdate}" showOn="button" />
+            </div>
+             <div class="col-md-2 form-label">
+                <p:outputLabel value="Balance"/>
+            </div>
+            <div class="col-md-3point5 ">
+                <p:inputText id="balance" class="fullWidth" value="#{customerApprovalCtr.customer.balance}" placeholder="balance"  maxlength="25"/>
+            </div>
+        </div>
+         <div class="row" style="padding-left: 20px; margin-bottom:20px;">
+   
+        <div class="col-md-2point5 form-label">
+                <p:outputLabel value="Age"/>
+            </div>  
+            <div class="col-md-4">
+                <p:inputText id="age" class="fullWidth" value="#{customerApprovalCtr.customer.age}" placeholder="age"  maxlength="35"/>
+            </div>
+           <div class="col-md-3 form-label">
+                <p:outputLabel value="Active"/>
+            </div> 
+            <div class="col-md-2point3">
+                <p:selectBooleanCheckbox id="active" class="" value="#{customerApprovalCtr.customer.isActive}" />
+            </div>
+        </div>
+  
+    </div> 
+
+    <script>
+        
+       
+
+    </script>
+
+</ui:composition>
